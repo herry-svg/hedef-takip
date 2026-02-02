@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KeremBey Portal v2</title>
+    <style>
+        :root { --bg: #0f0c29; --card: rgba(255,255,255,0.1); --text: #fff; --accent: #00d2ff; }
+        body.light { --bg: #f0f2f5; --card: #fff; --text: #333; --accent: #3a7bd5; }
+        body.dark { --bg: #0f0c29; --card: rgba(255,255,255,0.1); --text: #fff; --accent: #00d2ff; }
+        body.gold { --bg: #1a1a1a; --card: rgba(255,215,0,0.1); --text: #ffd700; --accent: #ffcc00; }
+
+        body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; transition: 0.3s; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .box { background: var(--card); padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); width: 350px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
+        input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: none; background: rgba(255,255,255,0.2); color: var(--text); box-sizing: border-box; outline: none; }
+        button { width: 100%; padding: 12px; border: none; border-radius: 8px; background: var(--accent); color: #fff; font-weight: bold; cursor: pointer; margin-top: 10px; transition: 0.2s; }
+        button:hover { opacity: 0.8; transform: scale(1.02); }
+        .hidden { display: none; }
+        .menu-btn { margin-bottom: 10px; background: rgba(255,255,255,0.05); text-align: left; padding: 15px; border-left: 4px solid var(--accent); }
+        .target-item { background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; margin-bottom: 10px; font-size: 14px; border-left: 2px solid var(--accent); }
+        .date { font-size: 10px; opacity: 0.6; display: block; margin-top: 5px; color: var(--accent); }
+        .admin-item { font-size: 12px; border-bottom: 1px solid rgba(255,255,255,0.1); padding: 8px 0; color: #ddd; }
+        .error-msg { color: #ff4b2b; font-size: 12px; text-align: center; margin-top: 5px; }
+    </style>
+</head>
+<body class="dark">
+
+<div id="auth-screen" class="box">
+    <h2 id="auth-title" style="text-align: center;">Giriş Yap</h2>
+    <input type="text" id="user-in" placeholder="Kullanıcı Adı">
+    <input type="password" id="pass-in" placeholder="Şifre">
+    <div id="auth-error" class="error-msg"></div>
+    <button onclick="authAction()">Devam Et</button>
+    <p style="text-align:center; cursor:pointer; font-size:12px; margin-top:15px;" onclick="toggleAuth()">Hesabın yok mu? Kayıt Ol</p>
+</div>
+
+<div id="main-menu" class="box hidden">
+    <h2 id="welcome-msg" style="text-align: center;">Hoş geldin!</h2>
+    <button class="menu-btn" onclick="showSection('sec-target')">🎯 1. Hedef Takip</button>
+    <button class="menu-btn" onclick="showSection('sec-info')">👤 2. Kullanıcı Bilgileri</button>
+    <button class="menu-btn" onclick="showSection('sec-theme')">🎨 3. Tema Değiştirme</button>
+    <button id="admin-btn" class="menu-btn hidden" onclick="showSection('sec-admin')" style="border-left-color: #ffd700;">👑 4. Yönetim Paneli</button>
+    <button onclick="logout()" style="background:#ff4b2b; margin-top: 20px;">Güvenli Çıkış</button>
+</div>
+
+<div id="sec-target" class="box hidden">
+    <h3>Hedeflerim</h3>
+    <input type="text" id="target-in" placeholder="Hedefinizi buraya yazın...">
+    <button onclick="addTarget()">Ekle</button>
+    <div id="target-list" style="margin-top:20px; max-height: 200px; overflow-y: auto;"></div>
+    <button onclick="showSection('main-menu')" style="background
